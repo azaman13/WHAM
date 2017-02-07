@@ -1,0 +1,44 @@
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+FLUSH PRIVILEGES;
+
+# create DB
+
+CREATE DATABASE BucketList;
+
+=================
+THIS WORKED!!!!
+
+CREATE TABLE `BucketList`.`tbl_user` (
+  `user_id` BIGINT AUTO_INCREMENT,
+  `user_first_name` VARCHAR(45) NULL,
+  `user_last_name` VARCHAR(45) NULL,
+  `user_username` VARCHAR(45) NULL,
+  `user_password` VARCHAR(45) NULL,
+  PRIMARY KEY (`user_id`));
+
+
+DELIMITER $$
+CREATE DEFINER=`developer`@`localhost` PROCEDURE `sp_createUser`(
+    IN p_first_name VARCHAR(40),
+    IN p_last_name VARCHAR(40),
+    IN p_username VARCHAR(40),
+    IN p_password VARCHAR(40)
+)
+BEGIN
+    insert into tbl_user(
+        user_first_name,
+        user_last_name,
+        user_username,
+        user_password
+    )
+    values
+    (
+        p_first_name,
+        p_last_name,
+        p_username,
+        p_password
+    );
+END$$
+DELIMITER;
